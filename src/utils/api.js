@@ -2,6 +2,7 @@ import {
     _getUsers,
     _getQuestions,
     _saveQuestion,
+    _formatQuestion,
     _saveQuestionAnswer
 } from "./_DATA";
 
@@ -15,6 +16,14 @@ export function getInitialData () {
     }))
 }
 
-export default function saveQuestion(question) {
-    return _saveQuestion(question)
+export function saveQuestion(question, authedUser) {
+    return _saveQuestion(question, authedUser);
 };
+
+export function saveQuestionAnswer(authedUser, qid, answer) {
+    return _saveQuestionAnswer(authedUser, qid, answer);
+};
+
+export function formatQuestion(question){
+    return _formatQuestion(question);
+}
