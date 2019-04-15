@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Button, Header, Grid, Progress, Segment } from 'semantic-ui-react';
+import { Button, Header, Grid, Segment } from 'semantic-ui-react';
 import { handleVote } from '../../actions/questions';
 import { Link } from 'react-router-dom';
 
@@ -16,23 +16,23 @@ class Question extends Component {
     
     return voteFor(qid, answer)
   }
+  
     render() {
       const { users, userDetails, questions, isSingle = null } = this.props;
       const { id, author, optionOne, optionTwo } = questions;
-      
+      const circle = { width: 175, height: 175 }
+
       const userId = userDetails && userDetails.id ? userDetails.id : null;
       const currentUser = users ? users[author] : [];
 
       const optionOneSelected = optionOne.votes.includes(userId);
       const optionTwoSelected = optionTwo.votes.includes(userId);
-      const circle = { width: 175, height: 175 }
-
+    
       const opt1 = Object.keys(users).map((user) => optionOne.votes.includes(user));
       const opt2 = Object.keys(users).map((user) => optionTwo.votes.includes(user));
       const firstPick = opt1.filter((votes) => votes).length + ' out of ' + opt1.length;
-      console.log('firstPick ', firstPick);
       const secondPick = opt2.filter((votes) => votes).length + ' out of ' + opt2.length;
-      console.log('secondPick ', secondPick);
+      
       const firstPercent = (opt1.filter((votes) => votes).length / opt1.length * 100).toFixed(2);
       const secondPercent = (opt2.filter((votes) => votes).length / opt2.length * 100).toFixed(2);
 

@@ -26,7 +26,7 @@ export function handleVote(qid, answer) {
         const vote = { authedUser, qid, answer };
         
         return saveQuestionAnswer(vote)
-        .then((result) => {
+        .then(() => {
             dispatch(answerQuestion(vote))
         })
     }

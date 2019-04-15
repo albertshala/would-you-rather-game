@@ -46,7 +46,6 @@ class Nav extends Component {
           url='/logout'
           active={activeItem === 'logout'}
           onClick={(e) =>  {
-            console.log('hiasd');
             this.props.setUser(null);
             e.preventDefault();
           }}
