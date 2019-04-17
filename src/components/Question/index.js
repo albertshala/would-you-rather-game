@@ -20,21 +20,18 @@ class Question extends Component {
     render() {
       const { users, userDetails, questions, isSingle = null } = this.props;
       const { id, author, optionOne, optionTwo } = questions;
-      const circle = { width: 175, height: 175 }
 
       const userId = userDetails && userDetails.id ? userDetails.id : null;
       const currentUser = users ? users[author] : [];
 
       const optionOneSelected = optionOne.votes.includes(userId);
       const optionTwoSelected = optionTwo.votes.includes(userId);
-    
-      const opt1 = Object.keys(users).map((user) => optionOne.votes.includes(user));
-      const opt2 = Object.keys(users).map((user) => optionTwo.votes.includes(user));
-      const firstPick = opt1.filter((votes) => votes).length + ' out of ' + opt1.length;
-      const secondPick = opt2.filter((votes) => votes).length + ' out of ' + opt2.length;
-      
-      const firstPercent = (opt1.filter((votes) => votes).length / opt1.length * 100).toFixed(2);
-      const secondPercent = (opt2.filter((votes) => votes).length / opt2.length * 100).toFixed(2);
+
+      const totalUserVotedForThisQuestion = optionOne.votes.length + optionTwo.votes.length;
+      const firstPick = optionOne.votes.length + ' out of ' + totalUserVotedForThisQuestion;
+      const secondPick = optionTwo.votes.length + ' out of ' + totalUserVotedForThisQuestion;
+      const firstPercent =  (optionOne.votes.length / totalUserVotedForThisQuestion * 100).toFixed(2);
+      const secondPercent = (optionTwo.votes.length / totalUserVotedForThisQuestion * 100).toFixed(2);
 
       return (
         <Grid.Row>
@@ -90,21 +87,12 @@ class Question extends Component {
                           </div>
                           <div className="content">
                           <div className="content" style={{ marginTop: '10px', marginBottom: '10px' }}>Number of people selected this option:</div>
-                          { ( optionOneSelected ) ? 
-                          <Segment circular style={circle}>
-                            <Header as='h2'>
-                              { `${firstPercent}%` }
-                              <Header.Subheader>{firstPick}</Header.Subheader>
+                          <Segment>
+                            <Header>
+                              <Header.Subheader>{ ` 1st Option: ${firstPercent}%` } <strong> | { firstPick }</strong></Header.Subheader>
+                              <Header.Subheader>{ ` 2nd Option: ${secondPercent}%` } <strong> | { secondPick }</strong></Header.Subheader>
                             </Header>
                           </Segment>
-                          : 
-                          <Segment circular style={circle}>
-                            <Header as='h2'>
-                              { `${secondPercent}%` }
-                              <Header.Subheader>{secondPick}</Header.Subheader>
-                            </Header>
-                          </Segment>
-                          }
                           </div>
                         </div>
                       </Fragment>

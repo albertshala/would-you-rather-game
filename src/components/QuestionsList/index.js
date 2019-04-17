@@ -1,53 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Question from '../Question';
 import { Tab } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { Container, Segment } from 'semantic-ui-react';
 
-class QuestionsList extends Component {
-
-    render() {
-		const { currentUser, unansweredQuestions, answeredQuestions } = this.props;
-		
-        const panes = [
-            {
-			menuItem: 'Unanswered', render: () =>
-				<Tab.Pane attached={false}>
-					<Container>
-					{ unansweredQuestions && unansweredQuestions.map((questions) =>
-							<Segment.Group key={questions.id}>
-								<Question
-									key={questions.id}
-									userDetails={currentUser}
-									questions={ questions } />
-							</Segment.Group>
-						)}
-					</Container>
-				</Tab.Pane>
-            },
-            {
-			menuItem: 'Answered', render: () =>
-				<Tab.Pane attached={false}>
-					<Container>
-						{answeredQuestions && answeredQuestions.map((questions) =>
-							<Segment.Group key={questions.id}>
-								<Question
-									key={questions.id}
-									userDetails={currentUser}
-									questions={ questions } />
-							</Segment.Group>
-						)}
-					</Container>
-				</Tab.Pane>
-            },
-        ];
-        return (
-            <div>
-				<h3>Would you rather?</h3>
-                <Tab menu={{ pointing: true }} panes={panes} />
-            </div>
-        )
-    }
+const QuestionsList = (props) => {
+	const { currentUser, unansweredQuestions, answeredQuestions } = props;
+	
+	const panes = [
+		{
+		menuItem: 'Unanswered', render: () =>
+			<Tab.Pane attached={false}>
+				<Container>
+				{ unansweredQuestions && unansweredQuestions.map((questions) =>
+						<Segment.Group key={questions.id}>
+							<Question
+								key={questions.id}
+								userDetails={currentUser}
+								questions={ questions } />
+						</Segment.Group>
+					)}
+				</Container>
+			</Tab.Pane>
+		},
+		{
+		menuItem: 'Answered', render: () =>
+			<Tab.Pane attached={false}>
+				<Container>
+					{answeredQuestions && answeredQuestions.map((questions) =>
+						<Segment.Group key={questions.id}>
+							<Question
+								key={questions.id}
+								userDetails={currentUser}
+								questions={ questions } />
+						</Segment.Group>
+					)}
+				</Container>
+			</Tab.Pane>
+		},
+	];
+	return (
+		<div>
+			<h3>Would you rather?</h3>
+			<Tab menu={{ pointing: true }} panes={panes} />
+		</div>
+	)
 }
 
 const mapStateToProps = ({ users, questions, authedUser }, { match } ) => {
@@ -74,5 +71,4 @@ const mapStateToProps = ({ users, questions, authedUser }, { match } ) => {
 	}
 };
 
-const QuestionList = connect(mapStateToProps)(QuestionsList);
-export default QuestionList;
+export default connect(mapStateToProps)(QuestionsList);
